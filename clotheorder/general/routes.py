@@ -16,7 +16,7 @@ general = Blueprint('general','__name__')
 
 
 # Create a route to authenticate your users and return token.
-@general.route('/login', methods=['POST'])
+@general.route('/clotheorder/login', methods=['POST'])
 def login():
     _json = request.json
     # validate the received values
@@ -63,7 +63,7 @@ def login():
         return resp
 
 
-@general.route('/register', methods=['POST'])
+@general.route('/clotheorder/register', methods=['POST'])
 def register():
     _json = request.json
     _phonenumber = _json['phonenumber']
@@ -100,7 +100,7 @@ def register():
         return resp
 
 
-@general.route('/logout', methods=['POST'])
+@general.route('/clotheorder/logout', methods=['POST'])
 def logout():
     if 'access_token' in session:
         session.pop('access_token', None)
@@ -109,7 +109,7 @@ def logout():
     return resp
 
 
-@general.route('/allclothe')
+@general.route('/clotheorder/allclothe')
 def home():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
@@ -141,7 +141,7 @@ def home():
 
 
 # clothe detail
-@general.route('/clothe/<int:id>', methods=['GET'])
+@general.route('/clotheorder/clothe/<int:id>', methods=['GET'])
 def clothedetail(id):
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
@@ -206,7 +206,7 @@ def clothedetail(id):
 
 
 # category info
-@general.route('/clothe/category', methods=['GET'])
+@general.route('/clotheorder/clothe/category', methods=['GET'])
 def category_info():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
@@ -275,7 +275,7 @@ def sendEmail(userid,_email):
     mail.send(msg)
 
 #{{HOST}}/resetPassword?email=<Your email>
-@general.route('/resetPassword',methods = ['POST'])
+@general.route('/clotheorder/resetPassword',methods = ['POST'])
 def resetPassword():
     _email = request.args.get('email')
     
@@ -304,7 +304,7 @@ def resetPassword():
 
 
 #{{HOST}}/resetPassword/token?jwt=<Your token>
-@general.route('/resetPassword/token',methods=['PUT','GET'])
+@general.route('/clotheorder/resetPassword/token',methods=['PUT','GET'])
 @jwt_required(locations="query_string")
 def verifyTokenEmail():
     userid = get_jwt_identity()

@@ -15,7 +15,7 @@ admins = Blueprint('admins','__name__')
 # management
 
 # Create a route to authenticate your admins and return token.
-@admins.route('/admin/login', methods=['POST'])
+@admins.route('/clotheorder/admin/login', methods=['POST'])
 def login():
     _json = request.json
     # validate the received values
@@ -72,7 +72,7 @@ def login():
 
 
 ## admin updates order status to 'Delivering'
-@admins.route('/admin/order/update/<int:orderid>',methods=['PUT'])
+@admins.route('/clotheorder/admin/order/update/<int:orderid>',methods=['PUT'])
 @jwt_required()
 def orderStatusUpdate(orderid):
     info = get_jwt()
@@ -112,7 +112,7 @@ def orderStatusUpdate(orderid):
         return resp
 
 ## get customer info
-@admins.route('/admin/customer/info',methods=['GET'])
+@admins.route('/clotheorder/admin/customer/info',methods=['GET'])
 @jwt_required()
 def getCustomerInfo():
     data = get_jwt()
@@ -141,7 +141,7 @@ def getCustomerInfo():
 
 
 ## Lock and unlock customer accounts
-@admins.route('/admin/customer/status/<int:userid>', methods = ['PUT'])
+@admins.route('/clotheorder/admin/customer/status/<int:userid>', methods = ['PUT'])
 @jwt_required()
 def changeCustomerStatus(userid):
     data = get_jwt()
@@ -187,7 +187,7 @@ def changeCustomerStatus(userid):
 ## Admin: CURD clothe (get all clothe and clothe detail already available APIs)
 
 ## Create clothes
-@admins.route('/admin/clothe/create', methods = ['POST'])
+@admins.route('/clotheorder/admin/clothe/create', methods = ['POST'])
 @jwt_required()
 def createclothe():
     data = get_jwt()
@@ -266,7 +266,7 @@ def createclothe():
         return resp
 
 ## Update and detete clothe
-@admins.route('/admin/clothe/<int:clotheid>', methods = ['PUT', 'DELETE'])
+@admins.route('/clotheorder/admin/clothe/<int:clotheid>', methods = ['PUT', 'DELETE'])
 @jwt_required()
 def admimGetAllclothe(clotheid):
     data = get_jwt()
@@ -411,7 +411,7 @@ def admimGetAllclothe(clotheid):
 
 
 ## admin view order history or current 
-@admins.route('/admin/order/<status>', methods = ['GET'])
+@admins.route('/clotheorder/admin/order/<status>', methods = ['GET'])
 @jwt_required()
 def adminOrderHistory(status):
     data = get_jwt()
@@ -514,7 +514,7 @@ def adminOrderHistory(status):
 
 
 ## admin cancelled order
-@admins.route('/admin/order/cancel/<int:orderid>', methods = ['PUT'])
+@admins.route('/clotheorder/admin/order/cancel/<int:orderid>', methods = ['PUT'])
 @jwt_required()
 def adminCancelledOrder(orderid):
     data = get_jwt()
@@ -563,7 +563,7 @@ def adminCancelledOrder(orderid):
         return resp
 
 ## revenue statistics by day or month or year
-@admins.route('/admin/revenue', methods=['GET'])
+@admins.route('/clotheorder/admin/revenue', methods=['GET'])
 @jwt_required()
 def getRevenue():
     data = get_jwt()

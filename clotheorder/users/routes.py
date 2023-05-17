@@ -14,7 +14,7 @@ users = Blueprint('users','__name__')
 
 
 # get user information and change user information
-@users.route('/userInfo', methods=['GET','PUT'])
+@users.route('/clotheorder/userInfo', methods=['GET','PUT'])
 @jwt_required()
 def user_info():
     userid = get_jwt_identity()
@@ -68,7 +68,7 @@ def user_info():
 
 
 # user create order
-@users.route('/order/preparing',methods = ['POST'])
+@users.route('/clotheorder/order/preparing',methods = ['POST'])
 @jwt_required()
 def createOrder():
     userid = get_jwt_identity()
@@ -143,7 +143,7 @@ def createOrder():
     
 
 # user cancelled order
-@users.route('/order/cancel/<int:orderid>', methods = ['PUT'])
+@users.route('/clotheorder/order/cancel/<int:orderid>', methods = ['PUT'])
 @jwt_required()
 def usercancelledOrder(orderid):
     userid = get_jwt_identity()
@@ -190,7 +190,7 @@ def usercancelledOrder(orderid):
 
 
 # user confirm the order is 'Completed'
-@users.route('/order/complete/<int:orderid>',methods=['PUT'])
+@users.route('/clotheorder/order/complete/<int:orderid>',methods=['PUT'])
 @jwt_required()
 def userConfirmCompletedOrder(orderid):
     userid = get_jwt_identity()
@@ -228,7 +228,7 @@ def userConfirmCompletedOrder(orderid):
 
 
 # user view order history or current 
-@users.route('/order/<status>', methods = ['GET'])
+@users.route('/clotheorder/order/<status>', methods = ['GET'])
 @jwt_required()
 def userOrderHistory(status):
     userid = get_jwt_identity()
@@ -327,7 +327,7 @@ def userOrderHistory(status):
 
 
 
-@users.route('/changePassword',methods=['PUT'])
+@users.route('/clotheorder/changePassword',methods=['PUT'])
 @jwt_required()
 def changePassword():
     userid = get_jwt_identity()

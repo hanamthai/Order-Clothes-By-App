@@ -139,6 +139,43 @@ def home():
         return resp
 
 
+# filter by size
+@general.route('/clotheorder/filter/size',methods=['GET'])
+def filterbysize():
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    sql_get_clotheid_by_name_size = "SELECT clotheid FROM sizes WHERE namesize = %s"
+    sql_get_clothe_by_clotheid = "SELECT * FROM clothes WHERE clotheid = %s"
+    
+    _json = request.json
+    _namesize = _json['namesize']
+    
+    sql_where = (_namesize,)
+    cursor.execute(sql_get_clotheid_by_name_size,sql_where)
+    row = cursor.fetchall()
+    clotheid = [i[0] for i in row]
+    if clotheid == []:
+        resp = jsonify({'message':"Items not found!!"})
+        resp.status_code = 400
+        return resp
+
+    clothes = []
+    for i in clotheid:
+        sql_where=(i,)
+        cursor.execute(sql_get_clothe_by_clotheid,sql_where)
+        row  = cursor.fetchone()
+        clothe = [{'clotheid': row[0], 'clothename': row[1], 'clotheimage': row[2],
+                'categoryid': row[3],'status': row[4]}]
+        clothes.append(clothe)
+    if clothes == None:
+        resp = jsonify({'message':"Items not found!!"})
+        resp.status_code = 400
+        return resp
+    else:
+        resp = jsonify(data=clothes)
+        resp.status_code = 200
+        return resp
+
+
 
 # clothe detail
 @general.route('/clotheorder/clothe/<int:id>', methods=['GET'])
